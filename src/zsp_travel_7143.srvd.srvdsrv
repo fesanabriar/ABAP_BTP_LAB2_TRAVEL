@@ -1,0 +1,15 @@
+@EndUserText.label: 'Service Data Processor'
+define service ZSP_TRAVEL_7143 {
+  expose ZCP_TRAVEL_7143       as Travel;
+  expose ZCP_BOOKING_7143      as Booking;
+  expose ZCP_BOOKPSUPL_7143    as BookingSupplement;
+  expose /DMO/I_Supplement     as Supplement;
+  expose /DMO/I_SupplementText as SupplementText;
+  expose /DMO/I_Customer       as Passenger;
+  expose /DMO/I_Agency         as TravelAgency;
+  expose /DMO/I_Carrier        as AirLine;
+  expose /DMO/I_Connection     as FlightConnection;
+  expose /DMO/I_Flight         as Flight;
+  expose I_Currency            as Currency;
+  expose I_Country             as Country;
+}
