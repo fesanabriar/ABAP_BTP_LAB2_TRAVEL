@@ -1,7 +1,7 @@
 @EndUserText.label: 'Booking Supplement Consumption View'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@Metadata.allowExtensions: true
-@Search.searchable: true
+@Metadata.allowExtensions: true //Esta proyeccion permite la creacion de Metadata
+@Search.searchable: true        //Permite busqueda avanzada
 //--------------------------------------------------------------------------------------------------------------------
 //CDS PROYECCION VIEW DE SUPLEMENTOS DE RESERVAS
 //--------------------------------------------------------------------------------------------------------------------
@@ -21,8 +21,8 @@ define view entity ZCP_BOOKPSUPL_7143
 //REDIRECTED TO: redirects a simple association.
 //REDIRECTED TO COMPOSITION CHILD: redirects a composition. The redirected association must be a CDS composition.
 //REDIRECTED TO PARENT: redirects a to-parent association. The redirected association must be a to-parent association.      
-      _Travel  : redirected to ZCP_TRAVEL_7143,
-      _Booking : redirected to parent ZCP_BOOKING_7143,
+      _Travel  : redirected to ZCP_TRAVEL_7143,          // Redireccion simple
+      _Booking : redirected to parent ZCP_BOOKING_7143,  // Redirecciona a Padre
       _Product
       //      _SupplementText,
 }

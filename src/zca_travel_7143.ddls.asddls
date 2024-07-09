@@ -6,6 +6,8 @@
 //CDS PARA ROL APROBADOR VIEW ROOT DE VIAJES
 //--------------------------------------------------------------------------------------------------------------------
 define root view entity ZCA_TRAVEL_7143
+  provider contract transactional_query
+//  provider contract transactional_interface.
   as projection on ZCD_TRAVEL_7143
 {
   key TravelId,
@@ -17,6 +19,8 @@ define root view entity ZCA_TRAVEL_7143
       EndDate,
       BookingFee,
       TotalPrice,
+      @Consumption.valueHelpDefinition: [{ entity.name: 'I_CurrencyStdVH',
+                                           entity.element : 'Currency' }]
       CurrencyCode,
       OverallStatus,
       Description,

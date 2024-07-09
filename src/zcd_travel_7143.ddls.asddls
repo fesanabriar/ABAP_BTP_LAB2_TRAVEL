@@ -5,11 +5,11 @@
 //CDS DE CONSUMO DE VIAJES
 //--------------------------------------------------------------------------------------------------------------------
 define root view entity ZCD_TRAVEL_7143
-  as select from ztb_travel_7143 as Travel
-  composition [0..*] of ZCD_BOOKING_7143 as _Booking //Debe estar definido el PARET en ZCD_I_BOOKING_7143
-  association [0..1] to /DMO/I_Agency      as _Agency   on $projection.AgencyId = _Agency.AgencyID
-  association [0..1] to /DMO/I_Customer    as _Customer on $projection.CustomerId = _Customer.CustomerID
-  association [0..1] to I_Currency         as _Currency on $projection.CurrencyCode = _Currency.Currency
+  as select from        ztb_travel_7143  as Travel
+  composition [0..*] of ZCD_BOOKING_7143 as _Booking //Debe estar definido el PARENT en ZCD_BOOKING_7143
+  association [0..1] to /DMO/I_Agency    as _Agency   on $projection.AgencyId     = _Agency.AgencyID
+  association [0..1] to /DMO/I_Customer  as _Customer on $projection.CustomerId   = _Customer.CustomerID
+  association [0..1] to I_Currency       as _Currency on $projection.CurrencyCode = _Currency.Currency
 {
   key travel_id       as TravelId,
       agency_id       as AgencyId,
@@ -35,4 +35,5 @@ define root view entity ZCD_TRAVEL_7143
       _Agency,
       _Customer,
       _Currency
+      
 }

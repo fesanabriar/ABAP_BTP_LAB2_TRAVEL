@@ -1,12 +1,12 @@
 @EndUserText.label: 'Travel Consumtion Procesor'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@Metadata.allowExtensions: true
-@Search.searchable: true
+@Metadata.allowExtensions: true //Esta proyeccion permite la creacion de Metadata
+@Search.searchable: true        //Permite busqueda avanzada
 //--------------------------------------------------------------------------------------------------------------------
 //CDS PROYECCION VIEW ROOT DE VIAJES
 //--------------------------------------------------------------------------------------------------------------------
 define root view entity ZCP_TRAVEL_7143
-  as projection on ZCD_TRAVEL_7143
+       as projection on ZCD_TRAVEL_7143
 {
   key TravelId,
       AgencyId,
