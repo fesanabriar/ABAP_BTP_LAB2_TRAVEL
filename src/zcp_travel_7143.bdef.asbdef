@@ -19,19 +19,19 @@ use etag
 
 }
 
-//define behavior for ZCP_BOOKING_7143 alias BookingProccesor
-//{
-//  use update;
-//  //  use delete;
-//
-//  use association _Supplement { create; }
-//
-//}
+define behavior for ZCP_BOOKING_7143 alias BookingProccesor
+{
+  use update;
+  //  use delete;
+
+  use association _Supplement { create; }
+  use association _Travel; //La autorizacion depende del padre Travel
+}
 
 define behavior for ZCP_BOOKPSUPL_7143 alias SupplementProccesor
 {
   use update;
   //  use delete;
 
-  use association _Travel;
+  use association _Travel; //La autorizacion depende del padre Travel
 }

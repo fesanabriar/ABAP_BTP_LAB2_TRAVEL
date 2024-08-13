@@ -7,6 +7,7 @@ managed;   // El manejo lo hace el Framework, no el desarrollador
 define behavior for ZCD_TRAVEL_7143 alias Travel
 implementation in class zcl_travel_7143 unique //Clase manejadora para este Behavior
 persistent table ztb_travel_7143 //Guardado por el Framework
+with additional save
 //////draft table ztbd_travel_7143 // Crea Temporal en una copia de la tabla pero DRAF
 lock master   //Bloqueo de instancia
 authorization master ( instance )//Control de autorizaciones
@@ -16,7 +17,7 @@ etag master LastChangedAt //Asegura que no se den actualizace en el protocolo OD
   field ( readonly ) TravelID;
   field ( readonly ) LastChangedAt, LastChangedBy, CreatedAt, CreatedBy;
   // Mandatory fields that are required to create a Travel
-  field ( mandatory ) AgencyId, OverallStatus, BookingFee, CurrencyCode;
+  field ( mandatory : create ) AgencyId, OverallStatus, BookingFee, CurrencyCode;
   // Dinamic field control
   field ( features : instance ) BookingFee; //TravelId;
 
@@ -37,7 +38,6 @@ etag master LastChangedAt //Asegura que no se den actualizace en el protocolo OD
       CreatedAt     = created_at;
       LastChangedBy = last_changed_by;
       LastChangedAt = last_changed_at;
-      //      LastChangedAt      = last_changed_at;
     }
   create;
   update;
@@ -52,11 +52,11 @@ etag master LastChangedAt //Asegura que no se den actualizace en el protocolo OD
 
 
   // Validations
-  validation validateCustomer on save { field CustomerId; }
-  validation validateDates on save { field BeginDate, EndDate; }
-  validation validateStatus on save { field OverallStatus; }
+  validation validateCustomer on save { create;field CustomerId; }
+  validation validateDates on save { create;field BeginDate, EndDate; }
+  validation validateStatus on save { create;field OverallStatus; }
 
-  association _Booking { create; }
+  association _Booking { create ( features : instance ); }
 
   //////  determination setTravelNumber on save { create; } //Se ejcuta con el save
   //////  determination setStatusToOpen on modify { create; } // Se ejcuta con cada modificacion
@@ -77,28 +77,40 @@ define behavior for ZCD_BOOKING_7143 alias Booking
 implementation in class zcl_booking_7143 unique //Clase manejadora para este Behavior
 persistent table ztb_booking_7143 //Guardado por el Framework
 lock dependent by _Travel
-authorization dependent by _Travel //Control de autorizaciones
+authorization dependent by _Travel //Control de autorizaciones depende de _Travel
 etag master LastChangedAt //Asegura que no se den actualizace en el protocolo OData simultaneas
 {
   //////  // Static field control
-  field ( mandatory ) CarrierId, ConnectionId, FlightDate, BookingStatus;
+  field ( mandatory : create ) CarrierId, ConnectionId, FlightDate, BookingStatus;
   field ( readonly ) TravelId, BookingId;
 
   // Mapping - mapeo a la tabla de base de datos
-  mapping for ztb_booking_7143 corresponding;
-
+  mapping for ztb_booking_7143
+    {
+      BookingDate   = booking_date; // corresponding;
+      BookingId     = booking_id;
+      BookingStatus = booking_status;
+      CarrierId     = carrier_id;
+      ConnectionId  = connection_id;
+      CurrencyCode  = currency_code;
+      CustomerId    = customer_id;
+      FlightDate    = flight_date;
+      FlightPrice   = flight_price;
+      LastChangedAt = last_changed_at;
+      TravelId      = travel_id;
+    }
   update;
   delete;
 
   // Validations
-  validation validateStatus on save { field BookingStatus; }
+  validation validateStatus on save { create; field BookingStatus; }
 
   // Determination - cálculo del precio total del vuelo
   determination calculateTotalFlightPrice on modify { field FlightPrice, CurrencyCode; }
 
   // Associations
   association _Supplement { create; }
-  association _Travel {}
+  association _Travel { }
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -109,11 +121,11 @@ implementation in class zcl_supplement_7143 unique //Clase manejadora para este 
 with unmanaged save //guardado no administrado por el framework
 //persistent table ztb_booksup_7143
 lock dependent by _Travel
-authorization dependent by _Travel //Control de autorizaciones
+authorization dependent by _Travel //Control de autorizaciones depende de _Travel
 etag master LastChangedAt //Asegura que no se den actualizace en el protocolo OData simultaneas
 {
   // Static field control
-  field ( mandatory ) SupplementId, Price;
+  field ( mandatory : create ) SupplementId, Price;
   field ( readonly ) TravelId, BookingId;
 
   // Mapping - mapeo del CDS a base de datos

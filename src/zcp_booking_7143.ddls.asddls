@@ -21,7 +21,7 @@ define view entity ZCP_BOOKING_7143
       BookingStatus,
       LastChangedAt,
       /* Associations */
-//Se puede redireccioar de las siguientes formas:
+//Se puede redireccioar de las siguientes formas:.
 //REDIRECTED TO: redirects a simple association.
 //REDIRECTED TO COMPOSITION CHILD: redirects a composition. The redirected association must be a CDS composition.
 //REDIRECTED TO PARENT: redirects a to-parent association. The redirected association must be a to-parent association.  
